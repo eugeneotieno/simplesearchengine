@@ -1,1 +1,1 @@
-/Users/eugene/IdeaProjects/ExampleStart/build/classes/kotlin/main/MainKt.class
+/Users/eugene/IdeaProjects/ExampleStart/build/classes/kotlin/main/MainKt$start$1.class:/Users/eugene/IdeaProjects/ExampleStart/build/classes/kotlin/main/MainKt.class

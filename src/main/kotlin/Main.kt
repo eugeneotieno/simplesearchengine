@@ -1,3 +1,4 @@
+import java.io.File
 import java.util.*
 
 private lateinit var peopleList: Array<String>
@@ -7,9 +8,11 @@ fun main() {
 }
 
 fun start() {
-    val people = getNum("Enter the number of people:")
-    println("Enter all people:")
-    peopleList = Array(people) { readln() }
+    val searchListLines = mutableListOf<String>()
+    File("src/names.txt").forEachLine {
+        searchListLines.add(it)
+    }
+    peopleList = searchListLines.toTypedArray()
     menu()
 }
 
