@@ -2,6 +2,7 @@ import java.io.File
 import java.util.*
 
 private lateinit var peopleList: Array<String>
+private val peopleMap = mutableMapOf<String, MutableList<Int>>()
 
 fun main() {
     start()
@@ -9,8 +10,18 @@ fun main() {
 
 fun start() {
     val searchListLines = mutableListOf<String>()
-    File("src/names.txt").forEachLine {
-        searchListLines.add(it)
+    var count = 0
+    File("src/names.txt").forEachLine { line->
+        searchListLines.add(line)
+
+        val hold = line.trim()
+        val split = hold.lowercase().split("\\s+".toRegex()).toTypedArray()
+        for (word in split) {
+            if (peopleMap.containsKey(word)) {
+                peopleMap[word]?.add(count)
+            } else peopleMap[word] = mutableListOf(count)
+        }
+        count++
     }
     peopleList = searchListLines.toTypedArray()
     menu()
@@ -24,7 +35,7 @@ fun menu() {
         val read = getString(menu)
         num = read.toIntOrNull() ?: getNum(read, true)
         when (num) {
-            1 -> find()
+            1 -> search()
             2 -> printAll()
             0 -> exit = true
             else -> println("\nIncorrect option! Try again.")
@@ -42,6 +53,14 @@ fun find() {
         }
     }
     if (!found) println("No matching people found.")
+}
+
+fun search() {
+    val search = getString("\nEnter a name or email to search all suitable people.").lowercase().trim()
+    if (peopleMap.containsKey(search)) {
+        println("${peopleMap[search]?.size} persons found:")
+        peopleMap[search]?.forEach { println(peopleList[it]) }
+    } else println("No matching people found.")
 }
 
 fun printAll() {
